@@ -1,0 +1,101 @@
+[gd_scene format=3 uid="uid://dggekh583vpsv"]
+
+[ext_resource type="Script" uid="uid://ci68sbsleqmrq" path="res://demo.gd" id="1_kdlon"]
+[ext_resource type="Texture2D" uid="uid://dw37qeu447ke3" path="res://assets/window_a_inv_blur.png" id="2_2xnjp"]
+[ext_resource type="Texture2D" uid="uid://dh1hgk8trxevi" path="res://assets/window_a_inv_blur_colored.png" id="3_2xnjp"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_m0rpm"]
+size = Vector2(20, 20)
+
+[sub_resource type="BoxMesh" id="BoxMesh_dx6mk"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kdlon"]
+disable_receive_shadows = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2xnjp"]
+transparency = 3
+alpha_hash_scale = 1.0
+alpha_antialiasing_mode = 0
+albedo_color = Color(0.16862746, 1, 1, 0.38039216)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_gxmxl"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_main"]
+sky_material = SubResource("ProceduralSkyMaterial_gxmxl")
+
+[sub_resource type="Environment" id="Environment_n4w22"]
+sky = SubResource("Sky_main")
+ambient_light_source = 2
+ambient_light_color = Color(0.22718397, 0.28697228, 0.35482118, 1)
+ambient_light_energy = 0.5
+tonemap_mode = 3
+ssao_enabled = true
+sdfgi_enabled = true
+sdfgi_energy = 0.8
+glow_enabled = true
+glow_intensity = 0.8
+glow_hdr_threshold = 0.8
+volumetric_fog_density = 0.0246
+volumetric_fog_emission_energy = 0.0
+volumetric_fog_gi_inject = 0.0
+volumetric_fog_anisotropy = -0.9
+volumetric_fog_length = 67.15
+volumetric_fog_detail_spread = 1.3058263
+
+[node name="DemoSimple" type="Node3D" unique_id=1848055283]
+script = ExtResource("1_kdlon")
+
+[node name="Floor" type="MeshInstance3D" parent="." unique_id=21289658]
+mesh = SubResource("PlaneMesh_m0rpm")
+
+[node name="Wall" type="MeshInstance3D" parent="." unique_id=1283799847]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 8.76408, -9.703915)
+mesh = SubResource("PlaneMesh_m0rpm")
+
+[node name="WithMesh" type="Node3D" parent="." unique_id=304784960]
+visible = false
+
+[node name="Cube" type="MeshInstance3D" parent="WithMesh" unique_id=377142232]
+transform = Transform3D(1.9630287, 0, 0, 0, 1.9630288, 0, 0, 0, 1.9630288, 0.30839872, 9.351303, -0.9748335)
+visible = false
+mesh = SubResource("BoxMesh_dx6mk")
+surface_material_override/0 = SubResource("StandardMaterial3D_kdlon")
+
+[node name="CubeTransparent" type="MeshInstance3D" parent="WithMesh" unique_id=639755430]
+transform = Transform3D(1.9630287, 0, 0, 0, 1.9630288, 0, 0, 0, 1.9630288, 0.30839872, 9.351303, -2.3864613)
+visible = false
+mesh = SubResource("BoxMesh_dx6mk")
+surface_material_override/0 = SubResource("StandardMaterial3D_2xnjp")
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="WithMesh" unique_id=1345065539]
+transform = Transform3D(1, 0, 0, 0, 0.9996833, 0.025165051, 0, -0.025165051, 0.9996833, 0.46410716, 9.476856, 4.537631)
+light_energy = 30.0
+shadow_enabled = true
+spot_range = 20.1069
+spot_angle = 29.64939
+
+[node name="WithTextureCookie" type="Node3D" parent="." unique_id=1750651959]
+
+[node name="SpotLight3D" type="SpotLight3D" parent="WithTextureCookie" unique_id=1335017852]
+transform = Transform3D(1, 0, 0, 0, 0.9996833, 0.025165051, 0, -0.025165051, 0.9996833, 0.46410716, 9.476856, 4.537631)
+light_color = Color(1, 0.54763925, 0.60450524, 1)
+light_energy = 30.0
+light_projector = ExtResource("2_2xnjp")
+shadow_enabled = true
+spot_range = 20.1069
+spot_angle = 29.64939
+
+[node name="SpotLight3D_WithGradient" type="SpotLight3D" parent="WithTextureCookie" unique_id=1906786832]
+transform = Transform3D(1, 0, 0, 0, 0.9996833, 0.025165051, 0, -0.025165051, 0.9996833, 0.46410716, 9.476856, 4.537631)
+visible = false
+light_color = Color(0.71917987, 0.7383547, 0.88151723, 1)
+light_energy = 30.0
+light_projector = ExtResource("3_2xnjp")
+shadow_enabled = true
+spot_range = 20.1069
+spot_angle = 29.64939
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1953512617]
+environment = SubResource("Environment_n4w22")
